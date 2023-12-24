@@ -20,6 +20,8 @@ class AddParking extends ConsumerWidget {
     final colors = context.colorScheme;
     final deviceSize = context.deviceSize;
 
+    final localization = ref.watch(cityProvider);
+
     List<String> paymentMethods = ['SMS', 'Card'];
 
     return Scaffold(
@@ -53,7 +55,11 @@ class AddParking extends ConsumerWidget {
                       ref.context.goNamed(licensePlatesRouteName);
                     },
                     child: containerEmitInput(
-                        text: ref.read(cityProvider).value,
+                        text: localization.when(
+                          data: (data) => data,
+                          error: (error, stackTrace) => error.toString(),
+                          loading: () => '...',
+                        ),
                         width: deviceSize.width)),
               ),
               customSection(
@@ -69,9 +75,9 @@ class AddParking extends ConsumerWidget {
                       return Padding(
                         padding: const EdgeInsets.only(right: 5.0),
                         child: InkWell(
-                          onTap: () =>
-                              ref.read(paymentMethodProvider.notifier).state ==
-                              paymentMethods[index],
+                          onTap: () => ref
+                              .read(paymentMethodProvider.notifier)
+                              .state = paymentMethods[index],
                           child: reusableContainerPaymentMethod(
                             text: paymentMethods[index],
                             selected: paymentMethods[index] ==

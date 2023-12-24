@@ -3,11 +3,11 @@ import 'package:smart_parking_md/utils/utils.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class LicensePlateDatasource {
-  static final LicensePlateDatasource _instance = LicensePlateDatasource._();
-  factory LicensePlateDatasource() => _instance;
+class CityDatasource {
+  static final CityDatasource _instance = CityDatasource._();
+  factory CityDatasource() => _instance;
 
-  LicensePlateDatasource._() {
+  CityDatasource._() {
     _initDB();
   }
 
