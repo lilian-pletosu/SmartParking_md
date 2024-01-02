@@ -7,5 +7,5 @@ The city is divided into several parts/areas. After the driver has parked his ca
 ## The technologies used
 
 The technologies used in this application are:
- - 1. Flutter
- - 2. SQLite (SqFlite)
+1. Flutter
+2. SQLite (SqFlite)
