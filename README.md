@@ -1,16 +1,11 @@
-# smart_parking_md
+# Smart Parking
 
-A new Flutter project.
+A new Flutter project for my annual work at the university. 
+The idea of this application is:
+The city is divided into several parts/areas. After the driver has parked his car, he opens the application and selects the area and period of parking and after that, the application will calculate how much parking will cost for this period in the selected area. The driver will be able to pay using Google Pay or Apple Pay.
 
-## Getting Started
+## The technologies used
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The technologies used in this application are:
+ - 1. Flutter
+ - 2. SQLite (SqFlite)
