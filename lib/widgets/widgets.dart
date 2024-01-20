@@ -8,6 +8,7 @@ import 'package:smart_parking_md/data/models/models.dart';
 import 'package:smart_parking_md/providers/providers.dart';
 
 Widget reusableItem({
+  required String title,
   required BuildContext context,
   required deviceSize,
   required colors,
@@ -24,7 +25,7 @@ Widget reusableItem({
         ),
         child: Center(
             child: Text(
-          'Parcare',
+          title,
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -43,45 +44,6 @@ Widget reusableWhiteText(
   return Text(
     text,
     style: TextStyle(color: color, fontSize: 17, fontWeight: fontWeight),
-  );
-}
-
-Widget customSearhInput() {
-  return SearchField(
-    searchInputDecoration: InputDecoration(
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.black.withOpacity(0.8),
-        ),
-      ),
-      border: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red),
-      ),
-    ),
-    suggestions: City.values
-        .map(
-          (e) => SearchFieldListItem(
-            e.name,
-            item: e,
-            // Use child to show Custom Widgets in the suggestions
-            // defaults to Text widget
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  // CircleAvatar(
-                  //   backgroundImage: NetworkImage(e.flag),
-                  // ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(e.name),
-                ],
-              ),
-            ),
-          ),
-        )
-        .toList(),
   );
 }
 
@@ -108,9 +70,9 @@ Widget reusableContainerPaymentMethod(
 Widget containerEmitInput(
     {String? text,
     color = Colors.white,
-    IconData? icon,
-    bool leadIcon = false,
+    Widget? lead,
     Color? iconColor,
+    bool textCenter = false,
     double? height,
     bool border = false,
     double? width,
@@ -129,11 +91,11 @@ Widget containerEmitInput(
       width: width,
       child: text != null
           ? Align(
-              alignment: Alignment.centerLeft,
-              child: leadIcon
+              alignment: textCenter ? Alignment.center : Alignment.centerLeft,
+              child: lead != null
                   ? Row(
                       children: [
-                        icon != null ? Icon(icon) : emitLicensePlate(),
+                        lead,
                         const Gap(5),
                         Text(
                           text,
@@ -148,10 +110,7 @@ Widget containerEmitInput(
                           fontSize: fontSize, fontWeight: FontWeight.w600),
                     ),
             )
-          : Icon(
-              icon,
-              color: iconColor,
-            ),
+          : lead,
     ),
   );
 }
@@ -286,6 +245,7 @@ Widget headerPage(
 Widget customSection({
   required colors,
   required width,
+  Color? textColor,
   double? height,
   required String sectionTitle,
   required Widget child,
@@ -302,7 +262,7 @@ Widget customSection({
           reusableWhiteText(
               text: sectionTitle,
               // color: colors.secondary,
-              color: Colors.white,
+              color: textColor ?? Colors.white,
               fontWeight: FontWeight.w600,
               fontsize: 17),
           const Gap(8),

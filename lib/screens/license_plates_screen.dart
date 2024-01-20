@@ -13,7 +13,7 @@ class LicensePlates extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.colorScheme;
-    final deviceSize = context.deviceSize;
+    // final deviceSize = context.deviceSize;
     final licensePlates = ref.watch(licensePlateProvider);
 
     return Scaffold(
@@ -37,16 +37,23 @@ class LicensePlates extends ConsumerWidget {
                 trailing: InkWell(
                   onTap: () => ref
                       .watch(licensePlateProvider.notifier)
-                      .remove(licensePlates[index]),
-                  child: Icon(Icons.delete_outline_rounded),
+                      .remove(licensePlates[index])
+                      .then((value) => ref.refresh(selectedLicenseProvider)),
+                  child: const Icon(Icons.delete_outline_rounded),
                 ),
-                leading: InkWell(
-                  onTap: () => ref.watch(licensePlateProvider.notifier).add(),
-                  child: Icon(Icons.add),
-                ),
-                title: Text(
-                  '${licensePlates[index].licensePlate} - ${licensePlates[index].id}',
-                  style: TextStyle(color: Colors.black),
+                title: InkWell(
+                  onTap: () {
+                    ref
+                        .watch(licensePlateProvider.notifier)
+                        .updateSelectedLicense(licensePlates[index]);
+                    ref.watch(selectedLicenseProvider.notifier).state =
+                        licensePlates[index].licensePlate;
+                    context.pop();
+                  },
+                  child: Text(
+                    licensePlates[index].licensePlate,
+                    style: const TextStyle(color: Colors.black),
+                  ),
                 ),
               );
             },

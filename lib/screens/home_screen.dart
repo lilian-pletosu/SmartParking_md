@@ -17,8 +17,6 @@ class HomeScreen extends ConsumerWidget {
     final colors = context.colorScheme;
     final deviceSize = context.deviceSize;
 
-    ref.read(cityProvider);
-
     return Scaffold(
         backgroundColor: colors.background,
         body: Stack(
@@ -32,7 +30,7 @@ class HomeScreen extends ConsumerWidget {
                       width: deviceSize.width,
                       height: deviceSize.height * 0.3,
                       child: Image.asset(
-                        'assets/images/logo_park.png',
+                        'assets/images/full_logo.png',
                         opacity: const AlwaysStoppedAnimation(.8),
                       )),
                 ),
@@ -45,9 +43,11 @@ class HomeScreen extends ConsumerWidget {
                       reusableItem(
                           context: context,
                           deviceSize: deviceSize,
+                          title: 'Parcare',
                           colors: colors),
                       const Gap(10),
                       reusableItem(
+                          title: 'Amenzi',
                           context: context,
                           deviceSize: deviceSize,
                           colors: colors)

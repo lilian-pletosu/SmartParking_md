@@ -2,40 +2,60 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:smart_parking_md/utils/utils.dart';
+
+class LicensePlateFields {
+  static const String licensePlateTable = 'license_plates';
+  static const String idColumn = 'id';
+  static const String licensePlateColumn = 'license_plate';
+  static const String statusColumn = 'status';
+}
 
 class LicensePlate extends Equatable {
   final int? id;
   final String licensePlate;
+  final bool status;
   const LicensePlate({
     this.id,
+    required this.status,
     required this.licensePlate,
   });
 
   @override
-  List<Object> get props => [if (id != null) id!, licensePlate];
+  List<Object> get props => [
+        if (id != null) id!,
+        licensePlate,
+        status,
+      ];
 
   LicensePlate copyWith({
     int? id,
     String? licensePlate,
+    bool? selected,
   }) {
     return LicensePlate(
       id: id ?? this.id,
+      status: status ?? this.status,
       licensePlate: licensePlate ?? this.licensePlate,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      DBKeys.idColumn: id,
-      DBKeys.licensePlateColumn: licensePlate,
+      LicensePlateFields.idColumn: id,
+      LicensePlateFields.statusColumn: 1,
+      LicensePlateFields.licensePlateColumn: licensePlate,
     };
   }
 
   factory LicensePlate.fromMap(Map<String, dynamic> map) {
     return LicensePlate(
-      id: map['id'] != null ? map['id'] as int : null,
-      licensePlate: map['licensePlate'],
+      id: map[LicensePlateFields.idColumn] != null
+          ? map[LicensePlateFields.idColumn] as int
+          : null,
+      status: map[LicensePlateFields.statusColumn] == 1 ? true : false,
+      licensePlate: map[LicensePlateFields.licensePlateColumn] != null
+          ? map[LicensePlateFields.licensePlateColumn] as String
+          : '',
     );
   }
 
@@ -43,8 +63,9 @@ class LicensePlate extends Equatable {
 
   factory LicensePlate.fromJson(Map<String, dynamic> map) {
     return LicensePlate(
-        id: map[LicensePlatesKeys.id],
-        licensePlate: map[LicensePlatesKeys.licensePlate]);
+        id: map[LicensePlateFields.idColumn],
+        status: map[LicensePlateFields.statusColumn] == 1,
+        licensePlate: map[LicensePlateFields.licensePlateColumn]);
   }
 
   @override

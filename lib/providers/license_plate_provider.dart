@@ -1,9 +1,9 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../data/data.dart';
+
+final selectedLicenseProvider = StateProvider<String?>((ref) {
+  return null;
+});
 
 final licensePlateProvider =
     StateNotifierProvider<LicensePlateNotifer, List<LicensePlate>>(
@@ -13,21 +13,26 @@ class LicensePlateNotifer extends StateNotifier<List<LicensePlate>> {
   LicensePlateNotifer() : super([]) {
     loadPlates();
   }
-
   Future<void> loadPlates() async {
-    List<LicensePlate> licensePlates =
-        await LicensePlateDatasource().getAllLicensesPlates();
+    List<LicensePlate> licensePlates = await DbHelper().getAllLicensesPlates();
     state = licensePlates.reversed.toList();
   }
 
-  Future<void> add() async {
-    await LicensePlateDatasource().addLicensePlate(
-        LicensePlate(licensePlate: 'item ${Random().nextInt(1999)}'));
+  Future<LicensePlate> add(String licensePlate) async {
+    LicensePlate newLicense =
+        LicensePlate(licensePlate: licensePlate, status: true);
+    await DbHelper().addLicensePlate(newLicense);
+    return newLicense;
     loadPlates();
   }
 
   Future<void> remove(LicensePlate licensePlate) async {
-    await LicensePlateDatasource().removeLicensePlate(licensePlate);
+    await DbHelper().removeLicensePlate(licensePlate);
+    loadPlates();
+  }
+
+  Future<void> updateSelectedLicense(LicensePlate licensePlate) async {
+    await DbHelper().updateStatusLicensePlate(licensePlate);
     loadPlates();
   }
 }
