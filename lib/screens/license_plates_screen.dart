@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_parking_md/providers/license_plate_provider.dart';
@@ -38,7 +39,9 @@ class LicensePlates extends ConsumerWidget {
                   onTap: () => ref
                       .watch(licensePlateProvider.notifier)
                       .remove(licensePlates[index])
-                      .then((value) => ref.refresh(selectedLicenseProvider)),
+                      .then((value) {
+                        HapticFeedback.vibrate();
+                        ref.refresh(selectedLicenseProvider);}),
                   child: const Icon(Icons.delete_outline_rounded),
                 ),
                 title: InkWell(
